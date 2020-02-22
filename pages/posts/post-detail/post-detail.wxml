@@ -1,0 +1,19 @@
+<!--pages/posts/post-detail/post-detail.wxml-->
+<view class="container">
+  <image src="/images/post/sls.jpg" class="head-image"></image>
+  <view class="author-data">
+    <image src="/images/avatar/2.png" class="avatar"></image>
+    <text class="author">胡歌</text>
+    <text class="const-text">发表于</text>
+    <text class="data">三天前</text>
+  </view>
+  <text class="title">炉石传说好玩吗</text>
+  <view class="tool">
+    <view class="circle-img">
+      <image src="/images/icon/collection.png"></image>
+      <image src="/images/icon/share.png" class="share-image"></image>
+    </view>
+    <view class="horizon"></view>
+  </view>
+  <text class="detail">炉石传说能不好玩吗，暴雪出品的游戏都是精品中的精品 </text>
+</view>
