@@ -78,6 +78,17 @@ Page({
       postsCollected[postid] = false;
       wx.setStorageSync('postsCollected', postsCollected)
     }
+    var _this = this;
+    wx.onBackgroundAudioPlay(function(){
+      _this.setData({
+        isPlayingMusic:true
+      })
+    });
+    wx.onBackgroundAudioPause(function(){
+      _this.setData({
+        isPlayingMusic:false
+      })
+    })
   },
 
   /**

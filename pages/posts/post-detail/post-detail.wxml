@@ -1,6 +1,6 @@
 <!--pages/posts/post-detail/post-detail.wxml-->
 <view class="container">
-  <image src="{{postItem.headImgSrc}}" class="head-image"></image>
+  <image src="{{isPlayingMusic?postItem.music.coverImg:postItem.headImgSrc}}" class="head-image"></image>
   <image catchtap="onMusicTap" class="audio" src="{{isPlayingMusic?'/images/music/music-stop.png':'/images/music/music-start.png'}}"></image>
   <view class="author-data">
     <image src="{{postItem.avatar}}" class="avatar"></image>
