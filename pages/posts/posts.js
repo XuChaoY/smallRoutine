@@ -11,7 +11,7 @@ Page({
   onPostTap:function(event){  //文章点击事件
     var postid = event.currentTarget.dataset.postid;
     wx.navigateTo({
-      url: 'post-detail/post-detail',
+      url: 'post-detail/post-detail?id='+postid,
     })
   },
   /**

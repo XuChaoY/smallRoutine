@@ -1,19 +1,21 @@
 <!--pages/posts/post-detail/post-detail.wxml-->
 <view class="container">
-  <image src="/images/post/sls.jpg" class="head-image"></image>
+  <image src="{{postItem.headImgSrc}}" class="head-image"></image>
+  <image catchtap="onMusicTap" class="audio" src="{{isPlayingMusic?'/images/music/music-stop.png':'/images/music/music-start.png'}}"></image>
   <view class="author-data">
-    <image src="/images/avatar/2.png" class="avatar"></image>
-    <text class="author">胡歌</text>
+    <image src="{{postItem.avatar}}" class="avatar"></image>
+    <text class="author">{{postItem.author}}</text>
     <text class="const-text">发表于</text>
-    <text class="data">三天前</text>
+    <text class="data">{{postItem.dateTime}}</text>
   </view>
-  <text class="title">炉石传说好玩吗</text>
+  <text class="title">{{postItem.title}}</text>
   <view class="tool">
     <view class="circle-img">
-      <image src="/images/icon/collection.png"></image>
-      <image src="/images/icon/share.png" class="share-image"></image>
+      <image catchtap="onCollectionTap" src="/images/icon/collection.png" wx:if="{{collected}}"></image>
+      <image catchtap="onCollectionTap" src="/images/icon/collection-anti.png" wx:else></image>
+      <image catchtap="onShareTap" src="/images/icon/share.png" class="share-image"></image>
     </view>
     <view class="horizon"></view>
   </view>
-  <text class="detail">炉石传说能不好玩吗，暴雪出品的游戏都是精品中的精品 </text>
+  <text class="detail">{{postItem.detail}}</text>
 </view>
