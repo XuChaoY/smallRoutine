@@ -1,5 +1,6 @@
 // pages/posts/post-detail/post-detail.js
 var postsData = require('../../../data/posts-data.js')
+var app = getApp();
 Page({
 
   /**
@@ -8,7 +9,7 @@ Page({
   data: {
     collected:false,
     currentPostId:'',
-    isPlayingMusic:false
+    isPlayingMusic:false,
   },
   onCollectionTap:function(event){
     //获取当前文章的收藏状态
@@ -43,6 +44,8 @@ Page({
       this.setData({
         isPlayingMusic:false
       })
+      app.globalData.g_isPlayingMusic = false;
+      app.globalData.g_currentMusicPostId = null;
     }else{
       wx.playBackgroundAudio({
         dataUrl: _this.data.postItem.music.url,
@@ -52,6 +55,8 @@ Page({
       this.setData({
         isPlayingMusic: true
       })
+      app.globalData.g_isPlayingMusic = true;
+      app.globalData.g_currentMusicPostId = this.data.currentPostId;
     }
   },
   /**
@@ -82,13 +87,22 @@ Page({
     wx.onBackgroundAudioPlay(function(){
       _this.setData({
         isPlayingMusic:true
-      })
+      });
+      app.globalData.g_isPlayingMusic = true;
+      app.globalData.g_currentMusicPostId = _this.data.currentPostId;
     });
     wx.onBackgroundAudioPause(function(){
       _this.setData({
         isPlayingMusic:false
+      });
+      app.globalData.g_isPlayingMusic = false;
+      app.globalData.g_currentMusicPostId = null
+    });
+    if (app.globalData.g_isPlayingMusic && postid == app.globalData.g_currentMusicPostId){
+      this.setData({
+        isPlayingMusic:true
       })
-    })
+    }
   },
 
   /**
