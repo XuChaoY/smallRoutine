@@ -11,7 +11,7 @@ App({
   globalData: {  //小程序全局变量
      g_isPlayingMusic:false,
      g_currentMusicPostId:null,
-     doubanBase:"http://t.yushu.im"
+    doubanBase:"https://api.douban.com"
   },
   onLaunch: function () {
     // console.log('onLaunch');
