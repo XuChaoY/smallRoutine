@@ -1,0 +1,2 @@
+/* pages/movies/more-moive/more-movie.wxss */
+@import '../movie-grid/movie-grid.wxss';

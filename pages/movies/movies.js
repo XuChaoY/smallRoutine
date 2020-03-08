@@ -1,4 +1,5 @@
 // pages/movies/movies.js
+var util = require('../../utils/util.js')
 var app = getApp();
 Page({
 
@@ -6,7 +7,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    inTheaters:[],
+    comingSoon:[],
+    top250:[],
+    containerShow:true,
+    searchPanelShow:false,
   },
 
   /**
@@ -16,11 +21,11 @@ Page({
     var inTheatersUrl = app.globalData.doubanBase+"/v2/movie/in_theaters?apikey=0df993c66c0c636e29ecbb5344252a4a&start=0&count=3";
     var comingSoonUrl = app.globalData.doubanBase +"/v2/movie/coming_soon?apikey=0df993c66c0c636e29ecbb5344252a4a&start=0&count=3";
     var top250 = app.globalData.doubanBase +"/v2/movie/top250?apikey=0df993c66c0c636e29ecbb5344252a4a&start=0&count=3";
-    this.getMoviesListData(inTheatersUrl);
-    // this.getMoviesListData(comingSoonUrl);
-    // this.getMoviesListData(top250);
+    this.getMoviesListData(inTheatersUrl, "inTheaters", "正在热映");
+    this.getMoviesListData(comingSoonUrl, "comingSoon", "即将上映");
+    this.getMoviesListData(top250, "top250", "豆瓣top250");
   },
-  getMoviesListData:function(url){
+  getMoviesListData: function (url, key, categoryTitle){
     var _this = this;
     wx.request({
       url: url,
@@ -29,14 +34,14 @@ Page({
         "Content-Type": "json"
       },
       success: function (res) {
-        _this.processDoubanData(res.data)
+        _this.processDoubanData(res.data, key, categoryTitle)
       },
       fail: function () {
         console.log("fail")
       }
     })
   },
-  processDoubanData:function(moviesDouban){
+  processDoubanData:function(moviesDouban, key, categoryTitle){
     var movies = [];
     for(var idx in moviesDouban.subjects){
       var subject = moviesDouban.subjects[idx];
@@ -48,12 +53,34 @@ Page({
         title:title,
         average: subject.rating.average,
         coverageUrl: subject.images.large,
-        movieId: subject.id
+        movieId: subject.id,
+        stars: util.convertToStarsArray(subject.rating.stars),
       };
       movies.push(temp);
     }
+    var readyData = {};
+    readyData[key] = {
+      movies:movies,
+      categoryTitle: categoryTitle
+    };
+    this.setData(readyData);
+  },
+  onMoreTap: function (event) {   //点击跟多跳转
+    var category = event.currentTarget.dataset.category;
+    wx.navigateTo({
+      url: 'more-movie/more-movie?category=' + category,
+    })
+  },
+  onCancelImgTap:function(event){
     this.setData({
-      movies
+      containerShow: true,
+      searchPanelShow: false,
+    })
+  },
+  onBindFocus: function (event){
+    this.setData({
+      containerShow:false,
+      searchPanelShow:true
     })
   },
   /**
