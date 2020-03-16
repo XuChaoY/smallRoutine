@@ -77,6 +77,12 @@ Page({
     util.http(nextUrl, this.processDoubanData);
     wx.showNavigationBarLoading();
   },
+  onMovieTap(event) {
+    var id = event.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '../moive-detail/movie-detail?id=' + id,
+    })
+  },
   onReady:function(){
     var _this = this;
     wx.setNavigationBarTitle({
